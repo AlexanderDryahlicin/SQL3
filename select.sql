@@ -1,4 +1,34 @@
--- (Количество исполнителей в каждом жанре.)
+-- ( 2 ) Название и продолжительность самого длительного трека.
+SELECT title, duration
+FROM Tracks
+ORDER BY duration DESC
+LIMIT 1;
+
+--Название треков, продолжительность которых не менее 3,5 минут.
+SELECT title
+FROM Tracks
+WHERE duration >= INTERVAL '3 minutes 30 seconds';
+
+--Названия сборников, вышедших в период с 2018 по 2020 год включительно.
+SELECT title
+FROM Compilations
+WHERE release_year BETWEEN 2018 AND 2020;
+
+--Исполнители, чьё имя состоит из одного слова.
+SELECT name
+FROM Artists
+WHERE name NOT LIKE '% %';
+
+--Название треков, которые содержат слово «мой» или «my»
+SELECT title
+FROM Tracks
+WHERE
+    title ILIKE 'мой %'   -- Слово в начале строки
+    OR title ILIKE '% мой' -- Слово в конце строки
+    OR title ILIKE '% мой %' -- Слово в середине строки
+    OR title ILIKE 'мой'   -- Название состоит только из этого слова
+
+-- ( 3 ) (Количество исполнителей в каждом жанре.)
 SELECT g.name genre_name, COUNT(ag.artist_id) artist_count
 FROM genres g
 LEFT JOIN Artists_Genres ag ON g.id = ag.genre_id
